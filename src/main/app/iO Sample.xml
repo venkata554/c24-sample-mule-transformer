@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tcp="http://www.mulesoft.org/schema/mule/tcp" xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" version="CE-3.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd 
+http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd 
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd 
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd 
+http://www.mulesoft.org/schema/mule/tcp http://www.mulesoft.org/schema/mule/tcp/current/mule-tcp.xsd 
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd ">
+    <mongo:config name="Mongo_DB" doc:name="Mongo DB"/>
+    
+    <flow name="FileAquisition" doc:name="FileAquisition">
+        <file:inbound-endpoint path="/tmp/mule/in" responseTimeout="10000" doc:name="Inbound SWIFT">
+            <file:filename-regex-filter pattern=".*.dat" caseSensitive="true"/>
+        </file:inbound-endpoint>
+        <flow-ref name="ProcessingFlow" doc:name="ProcessingFlow"/>
+    </flow>
+    <flow name="HTTPAcquisition" doc:name="HTTPAcquisition">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="SwiftMT541" doc:name="Inbound SWIFT"/>
+        <flow-ref name="ProcessingFlow" doc:name="ProcessingFlow"/>
+    </flow>
+    <flow name="ProcessingFlow" doc:name="ProcessingFlow">
+        <component doc:name="C24 Parser">
+            <singleton-object class="biz.c24.io.mule.C24Parser">
+                <property key="element" value="biz.c24.io.swift2012.MT541Element"/>
+                <property key="encoding" value="UTF-8"/>
+            </singleton-object>
+        </component>
+        <component doc:name="C24 Validating Filter">
+            <singleton-object class="biz.c24.io.mule.C24ValidatingFilter"/>
+        </component>
+        <component doc:name="C24 Object-to-XML Transformer">
+            <singleton-object class="biz.c24.io.mule.C24ObjectToXmlTransformer"/>
+        </component>
+        <echo-component doc:name="Echo"/>
+        <file:outbound-endpoint path="/tmp/mule/out" responseTimeout="10000" encoding="UTF-8" mimeType="text/xml" doc:name="Persist XML Message"/>
+    </flow>
+</mule>

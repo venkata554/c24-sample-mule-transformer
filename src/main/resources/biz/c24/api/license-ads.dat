@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<license runtime="true" reference_implementation="true" licensee="DataLoader Demo" expiryDate="2013-09-02" evaluation="false" designtime="true" checksum="iTC8S0x41VuxKLk4sJ6cGxuhqe0=">
+    <licenseeDescription>This license is for demo purposes only. any other usage is strictly prohibited.</licenseeDescription>
+    <product version="4.x.x" product="IO" edition="Enterprise Edition">
+        <textualLicense>FIX-4-2
+FIX-4-4
+FIX-5-0
+FpML
+SWIFTMT1nn
+SWIFTMT2nn
+SWIFTMT3nn
+SWIFTMT4nn
+SWIFTMT5nn
+SWIFTMT6nn
+SWIFTMT7nn
+SWIFTMT8nn
+SWIFTMT9nn
+</textualLicense>
+    </product>
+</license>
