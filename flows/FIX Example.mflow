@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="iO Sample">
+    <flow SubFlow="false" name="FixFileAquisition" entity-id="e46176cb-771d-462c-bc92-43f3de60af73">
+        <properties>
+            <property name="processingStrategy2"/>
+            <property name="processingStrategy"/>
+            <property value="1" name="auxiliary;index"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="1" name="auxiliary;index"/>
+            <property value="1" name="auxiliary;index"/>
+            <property value="1" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#1">
+            <endpoint message-exchange-pattern="OneWay" direction="Inbound" type="http://www.mulesoft.org/schema/mule/file/endpoint" name="Inbound FIX" entity-id="File#1">
+                <properties>
+                    <property value="one-way" name="exchange-pattern"/>
+                    <property value="/tmp/mule/in" name="path"/>
+                    <property name="outputPattern"/>
+                    <property name="moveToPattern"/>
+                    <property name="moveToDirectory"/>
+                    <property value="2" name="auxiliary;index"/>
+                    <property name="pollingFrequency"/>
+                    <property name="fileAge"/>
+                    <property value="2" name="auxiliary;index"/>
+                    <property value="2" name="auxiliary;index"/>
+                    <property value="2" name="auxiliary;index"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property value="2" name="auxiliary;index"/>
+                    <property name="address"/>
+                    <property value="10000" name="responseTimeout"/>
+                    <property name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property value="2" name="auxiliary;index"/>
+                    <property name="comparator"/>
+                    <property name="reverseOrder"/>
+                    <property value="2" name="auxiliary;index"/>
+                    <property value="2" name="auxiliary;index"/>
+                    <property name="connector-ref"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property value="2" name="auxiliary;index"/>
+                    <property value="2" name="auxiliary;index"/>
+                    <property value="2" name="auxiliary;index"/>
+                    <property-collection name="@http://www.mulesoft.org/schema/mule/file/filename-regex-filter;0">
+                        <property value=".*.fix" name="pattern"/>
+                        <property value="true" name="caseSensitive"/>
+                        <property value="3" name="auxiliary;wrapIn"/>
+                        <property value="3" name="auxiliary;index"/>
+                    </property-collection>
+                </properties>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/flow-ref" name="FixrocessingFlow" entity-id="Flow Reference#1">
+                <properties>
+                    <property value="FixProcessingFlow" name="name"/>
+                    <property value="4" name="auxiliary;index"/>
+                    <property value="4" name="auxiliary;index"/>
+                    <property value="4" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="FixHTTPAcquisition" entity-id="4ca92fcf-75ac-4a56-8b04-8133b67c6d92">
+        <properties>
+            <property name="processingStrategy2"/>
+            <property name="processingStrategy"/>
+            <property value="5" name="auxiliary;index"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="5" name="auxiliary;index"/>
+            <property value="5" name="auxiliary;index"/>
+            <property value="5" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#2">
+            <endpoint message-exchange-pattern="OneWay" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="Inbound FIX" entity-id="HTTP#1">
+                <properties>
+                    <property value="one-way" name="exchange-pattern"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property name="httpLabel"/>
+                    <property value="localhost" name="host"/>
+                    <property value="8081" name="port"/>
+                    <property value="FIX" name="path"/>
+                    <property name="method"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property name="address"/>
+                    <property name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="responseTimeout"/>
+                    <property name="followRedirects"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property name="connector-ref"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property name="user"/>
+                    <property name="password"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property name="contentType"/>
+                    <property name="keep-alive"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property value="6" name="auxiliary;index"/>
+                </properties>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/flow-ref" name="FixProcessingFlow" entity-id="Flow Reference#2">
+                <properties>
+                    <property value="FixProcessingFlow" name="name"/>
+                    <property value="7" name="auxiliary;index"/>
+                    <property value="7" name="auxiliary;index"/>
+                    <property value="7" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="FixProcessingFlow" entity-id="2de757c4-e631-4496-9690-39cb171ae4cd">
+        <properties>
+            <property name="processingStrategy2"/>
+            <property name="processingStrategy"/>
+            <property value="8" name="auxiliary;index"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="8" name="auxiliary;index"/>
+            <property value="8" name="auxiliary;index"/>
+            <property value="8" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#3">
+            <pattern type="http://www.mulesoft.org/schema/mule/core/component" name="C24 Parser" entity-id="Java#1">
+                <properties>
+                    <property value="9" name="auxiliary;index"/>
+                    <property value="9" name="auxiliary;index"/>
+                    <property value="9" name="auxiliary;index"/>
+                    <property name="class"/>
+                    <property value="9" name="auxiliary;index"/>
+                    <property value="9" name="auxiliary;index"/>
+                    <property value="9" name="auxiliary;index"/>
+                    <property-collection name="@http://www.mulesoft.org/schema/mule/core/singleton-object;0">
+                        <property value="biz.c24.io.mule.C24Parser" name="class"/>
+                        <property value="10" name="auxiliary;wrapIn"/>
+                        <property value="10" name="auxiliary;index"/>
+                        <property-collection name="@http://www.mulesoft.org/schema/mule/core/property;1">
+                            <property value="UTF-8" name="value"/>
+                            <property value="11" name="auxiliary;wrapIn"/>
+                            <property value="11" name="auxiliary;index"/>
+                            <property value="encoding" name="key"/>
+                        </property-collection>
+                        <property-collection name="@http://www.mulesoft.org/schema/mule/core/property;2">
+                            <property value="biz.c24.io.fix44.ConfirmationElement" name="value"/>
+                            <property value="12" name="auxiliary;wrapIn"/>
+                            <property value="12" name="auxiliary;index"/>
+                            <property value="element" name="key"/>
+                        </property-collection>
+                    </property-collection>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/component" name="C24 Object-to-XML Transformer" entity-id="Java#2">
+                <properties>
+                    <property value="13" name="auxiliary;index"/>
+                    <property value="13" name="auxiliary;index"/>
+                    <property value="13" name="auxiliary;index"/>
+                    <property name="class"/>
+                    <property value="13" name="auxiliary;index"/>
+                    <property value="13" name="auxiliary;index"/>
+                    <property value="13" name="auxiliary;index"/>
+                    <property-collection name="@http://www.mulesoft.org/schema/mule/core/singleton-object;0">
+                        <property value="biz.c24.io.mule.C24ObjectToXmlTransformer" name="class"/>
+                        <property value="14" name="auxiliary;wrapIn"/>
+                        <property value="14" name="auxiliary;index"/>
+                    </property-collection>
+                </properties>
+            </pattern>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.echo" name="Echo" entity-id="Echo#1">
+                <properties>
+                    <property value="15" name="auxiliary;index"/>
+                    <property value="15" name="auxiliary;index"/>
+                    <property value="15" name="auxiliary;index"/>
+                    <property value="15" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <endpoint message-exchange-pattern="OneWay" direction="Outbound" type="http://www.mulesoft.org/schema/mule/file/endpoint" name="Persist XML Message" entity-id="File#2">
+                <properties>
+                    <property value="one-way" name="exchange-pattern"/>
+                    <property value="/tmp/mule/out" name="path"/>
+                    <property name="outputPattern"/>
+                    <property name="moveToPattern"/>
+                    <property name="moveToDirectory"/>
+                    <property value="16" name="auxiliary;index"/>
+                    <property name="pollingFrequency"/>
+                    <property name="fileAge"/>
+                    <property value="16" name="auxiliary;index"/>
+                    <property value="16" name="auxiliary;index"/>
+                    <property value="16" name="auxiliary;index"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property value="16" name="auxiliary;index"/>
+                    <property name="address"/>
+                    <property value="10000" name="responseTimeout"/>
+                    <property value="UTF-8" name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property value="text/xml" name="mimeType"/>
+                    <property value="16" name="auxiliary;index"/>
+                    <property name="comparator"/>
+                    <property name="reverseOrder"/>
+                    <property value="16" name="auxiliary;index"/>
+                    <property value="16" name="auxiliary;index"/>
+                    <property name="connector-ref"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property value="16" name="auxiliary;index"/>
+                    <property value="16" name="auxiliary;index"/>
+                    <property value="16" name="auxiliary;index"/>
+                </properties>
+            </endpoint>
+        </lane>
+    </flow>
+    <description></description>
+</mule-configuration>
