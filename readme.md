@@ -7,7 +7,7 @@ Overview
 This sample project is a simple demonstration of how C24 Integration Objects can be used within
 a Mule ESB flow to parse, validate & transform inbound messages.
 
-The flow shows receiving and processing of SWIFT MT541s, either read from the file system or
+The flow shows receiving and processing of SWIFT MT541s and FIX 4.4 Confirmations, either read from the file system or
 received via an HTTP post.
 
 
@@ -21,22 +21,22 @@ Set the Project Root to be the folder containing this file and import the projec
 Setup the Project
 -----------------
 
-Open flows->iO Sample.mflow. We need to set the locations that files will be read and written from and the port that
+Open flows->FIX Example.mflow and flows->SWIFT Example.mflow. We need to set the locations that files will be read and written from and the port that
 the HTTP listener will use:
 
-1. For the file, first double click on the 'Inbound SWIFT' file adapter at the start of the FileAcquisition flow. Change 
+1. For the file, first double click on the 'Inbound [SWIFT|FIX]' file adapter at the start of the FileAcquisition flow. Change 
 the Path attribute to somewhere that exists in your local filesystem (defaults to /tmp/mule/in).
 
 2. Similarly, at the end of the ProcessingFlow set the Path of the 'Persist XML Message' (defaults to /tmp/mule/out).
 
-3. Double click on the 'Inbound SWIFT' HTTP adapter at the start of the HTTPAcquistion flow. Set the Port attribute
+3. Double click on the 'Inbound [SWIFT|FIX]' HTTP adapter at the start of the HTTPAcquistion flow. Set the Port attribute
 to an ununsed port (defaults to 8081).
 
 
 Running the Project
 -------------------
 
-Right click on the iO Sample.mflow in the Package Explorer and select 'Run As->Mule Application' 
+Right click on the project in the Package Explorer and select 'Run As->Mule Application' 
 
 You'll see some startup output on the console which will end with:
 
@@ -58,11 +58,13 @@ Once complete there will be
 a new file in the output directory (that you configured on the outbound file adapter) containing the
 complete MT541 but converted to an XML format.
 
+To see the FIX flow, copy the data/msg.fix file into the inbound directory. Again, you'll see the XML
+version written to the output directory.
 
 Processing an HTTP POST
 -----------------------
 
-The HTTPAcquisition flow takes the SWIFT message from the body of an HTTP POST.
+The HTTPAcquisition flow takes the SWIFT or FIX  message from the body of an HTTP POST.
 
 Remember that SWIFT messages must use \r\n as their line terminator, so you need to make sure that
 these are preserved when you create the HTTP request.
@@ -71,6 +73,10 @@ For example, to use curl to post the contents of the supplied MT541 sample messa
 run:
 
 curl --data-binary @data/swift/MT541.dat http://localhost:8081/SwiftMT541
+
+or
+
+curl --data-binary @data/msg.fix http://localhost:8081/FIX
 
 ensuring the port matches the one you configured above.
 
